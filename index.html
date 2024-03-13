@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="demo/exceljs.bare.js"></script>
+    <script src="demo/FileSaver.js"></script>
+    <!--library-->
+    <script src="dist/cx-html2excel.js"></script>
+</head>
+
+<body class="vh-100 d-flex flex-column">
+
+    <div>
+        <button onclick='handleExport()'>导出</button>
+        <div>
+          <table id='table-id'>
+            <colgroup>
+              <col style='width: 191px' />
+              <col style='width: 299px' />
+              <col style='width: 155px' />
+              <col style='width: 200px' />
+              <col style='width: 174px' />
+              <col style='width: 172px' />
+              <col style='width: 167px' />
+              <col style='width: 200px' />
+              <col style='width: 167px' />
+              <col style='width: 200px' />
+              <col style='width: 119px' />
+              <col style='width: 119px' />
+            </colgroup>
+            <tr>
+              <td style='height: 96px; font-size: 9pt; font-family: SimSun' colSpan="2">
+                xxxxxxxx
+              </td>
+            </tr>
+            <tr style='height: 26px'></tr>
+            <tr>
+              <td colSpan="2">
+                组合资产净值（元）
+              </td>
+              <td colSpan="2">
+                资产份额（份）
+              </td>
+              <td colSpan="2">
+                单位净值（元）
+              </td>
+              <td
+                rowSpan="2"
+              >
+                报告期内投资收益（元）
+              </td>
+              <td
+                rowSpan="2"
+              >
+                报告期内投资收益率（%）
+              </td>
+              <td
+                rowSpan="2"
+              >
+                本年以来投资收益率（%）
+              </td>
+              <td
+                rowSpan="2"
+              >
+                组合成立以来累计收益率(%)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                期初
+              </td>
+              <td>
+                期末
+              </td>
+              <td>
+                期初
+              </td>
+              <td>
+                期末
+              </td>
+              <td>
+                期初
+              </td>
+              <td>
+                期末
+              </td>
+            </tr>
+            <tr>
+              <td data-numfmt='0.00%'>
+                980876.876
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    <script>
+        async function handleExport() {
+            let table_elt = document.getElementById('table-id');
+            let buffer = await html2excel.generateExcel([{name: 'xxx1', elet: table_elt}]);
+            saveAs(
+                new Blob([buffer], { type: 'application/vnd.openxmlformats' }),
+                'excel.xlsx'
+            );
+        }
+    </script>
+</body>
+
+</html>

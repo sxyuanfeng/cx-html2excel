@@ -1,0 +1,8 @@
+node_modules
+.vs
+bin
+obj
+docx.js.map
+/package-lock.json
+/*.config
+*.log

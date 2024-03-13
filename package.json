@@ -1,0 +1,41 @@
+{
+  "name": "cx-html2excel",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "keywords": [
+    "excel",
+    "html",
+    "table"
+  ],
+  "author": {
+    "name": "libainan"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sxyuanfeng/cx-html2excel.git"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.2.6",
+    "tslib": "^2.4.0",
+    "typescript": "^5.0.3",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^5.0.1"
+  },
+  "scripts": {
+    "build": "webpack",
+    "build-prod": "webpack --mode production",
+    "build-umd": "webpack --env umd=true",
+    "build-all": "npm run build & npm run build-prod & npm run build-umd",
+    "watch": "webpack --env umd=true --watch",
+    "e2e": "karma start --single-run",
+    "e2e-watch": "karma start"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/cx-html2excel.js",
+  "types": "dist/cx-html2excel.d.ts"
+}
