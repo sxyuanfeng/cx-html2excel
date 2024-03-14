@@ -1,11 +1,12 @@
 [![npm version](https://badge.fury.io/js/cx-html2excel.svg)](https://www.npmjs.com/package/cx-html2excel)
 
 # cx-html2excel
-一个将html的table标签导出成excel的库，依赖exceljs，支持各种样式、对齐、图片、合并单元格、颜色、边框、单元格格式等
+A library that exports the html table tag to excel, depends on exceljs, supports various styles, alignments, images, merged cells, colors, borders, cell formats, etc.
+preview: yuanfengc.com/cx-html2excel
 
 Usage
 -----
-1. npm
+# 1. npm
 ```shell
 npm install cx-html2excel file-saver exceljs
 ```
@@ -24,7 +25,7 @@ async function handleExport() {
 }
 ```
 
-2. script
+# 2. script
 ```html
 <script src="demo/exceljs.bare.js"></script>
 <script src="demo/FileSaver.js"></script>
@@ -41,7 +42,7 @@ async function handleExport() {
 </script>
 ```
 
-DOM
+# DOM
 ```html
 <table id='table-id' style="border-collapse: collapse; border-spacing: 0;">
     <colgroup>
