@@ -1,9 +1,3 @@
-/*
- * @Author: xujiang
- * @Date: 2024-03-13 15:31:40
- * @LastEditors: xujiang
- * Copyright (c) 2024 by xujiang/cicc, All Rights Reserved.
- */
 const path = require('path')
 
 function buildConfig(prod, umd = false) {

@@ -81,13 +81,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   generateExcel: () => (/* binding */ generateExcel)
 /* harmony export */ });
-/*
- * @Author: xujiang
- * @Date: 2024-02-28 15:59:48
- * @LastEditors: xujiang
- * Copyright (c) 2024 by xujiang/cicc, All Rights Reserved.
- */
-
 const ExcelJS = __webpack_require__(/*! exceljs */ "exceljs");
 
 var pdre1 = /^(\d+):(\d+)(:\d+)?(\.\d+)?$/; // HH:MM[:SS[.UUU]]
@@ -172,7 +165,7 @@ function generateExcel(tables, userOptions) {
 			if (ops.font) cell.font = data[key].s.font;
 			if (ops.alignment) cell.alignment = data[key].s.alignment;
 			if (ops.border) cell.border = data[key].s.border;
-			if (ops.numfmt) cell.numFmt = data[key].s.numfmt;
+			if (ops.numfmt) cell.numFmt = data[key].z;
 			if (ops.chart && data[key].chart) {
 				const imageId = workbook.addImage({
 					base64: data[key].chart.base64,
@@ -254,7 +247,7 @@ function sheet_add_dom(ws, table, _opts) {
 			if (opts.display && is_dom_element_hidden(elt)) continue;
 			var v = elt.hasAttribute('data-v') ? elt.getAttribute('data-v') : elt.hasAttribute('v') ? elt.getAttribute('v') : htmldecode(elt.innerHTML);
 			var z = elt.getAttribute('data-z') || elt.getAttribute('z');
-			var numfmt = elt.getAttribute('data-numfmt') || elt.getAttribute('numfmt');
+			// var numfmt = elt.getAttribute('data-numfmt') || elt.getAttribute('numfmt');
 			for(midx = 0; midx < merges.length; ++midx) {
 				var m = merges[midx];
 				if(m.s.c == C + or_C && m.s.r < R + or_R && R + or_R <= m.e.r) { C = m.e.c+1 - or_C; midx = -1; }
@@ -274,7 +267,8 @@ function sheet_add_dom(ws, table, _opts) {
 					o = ({t:'d', v:parseDate(v)});
 					if(opts.UTC) o.v = local_to_utc(o.v);
 					if(!opts.cellDates) o = ({t:'n', v:datenum(o.v)});
-					o.z = opts.dateNF || table_fmt[14];
+					// o.z = opts.dateNF || table_fmt[14];
+					o.z = opts.dateNF || z || table_fmt[14];
 				}
 			}
 			if(o.z === undefined && z != null) o.z = z;
@@ -289,7 +283,7 @@ function sheet_add_dom(ws, table, _opts) {
 			if (parseChart(elt)) {
 				o.chart = parseChart(elt, C + or_C, R + or_R);
 			}
-			o.s.numfmt = numfmt;
+			// o.s.numfmt = numfmt;
 			// if(dense) { if(!ws["!data"][R + or_R]) ws["!data"][R + or_R] = []; ws["!data"][R + or_R][C + or_C] = o; }
 			// else ws[encode_cell({c:C + or_C, r:R + or_R})] = o;
 			if (!ws["!data"]) {
@@ -482,6 +476,7 @@ function get_get_computed_style_function(element) {
 }
 
 function local_to_utc(local) {
+	console.log(new Date(Date.UTC(local.getFullYear(), local.getMonth(), local.getDate(), local.getHours(), local.getMinutes(), local.getSeconds(), local.getMilliseconds())))
 	return new Date(Date.UTC(local.getFullYear(), local.getMonth(), local.getDate(), local.getHours(), local.getMinutes(), local.getSeconds(), local.getMilliseconds()));
 }
 
