@@ -1,8 +1,8 @@
 [![npm version](https://badge.fury.io/js/cx-html2excel.svg)](https://www.npmjs.com/package/cx-html2excel)
 
 # cx-html2excel
-A library that exports the html table tag to excel, depends on exceljs, supports various styles, alignments, images, merged cells, colors, borders, cell formats, etc.
-preview: yuanfengc.com/cx-html2excel
+A library that exports the html table tag to excel, depends on exceljs, supports various styles, alignments, images, merged cells, colors, borders, cell formats, etc.  
+preview: [yuanfengc.com/cx-html2excel](https://yuanfengc.com/cx-html2excel/)
 
 Usage
 -----
