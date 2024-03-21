@@ -131,6 +131,12 @@ var table_fmt = {
 	56: '"上午/下午 "hh"時"mm"分"ss"秒 "'
 };
 
+const fontFamilyDict = [
+	'SimSun', 'SimHei', 'Microsoft YaHei', 'Microsoft JhengHei', 'NSimSun', 'PMingLiU', 'MingLiU', 'DFKai-SB', 'FangSong', 'KaiTi', 'FangSong_GB2312', 'KaiTi_GB2312',
+	'STHeiti Light', 'STHeiti', 'STKaiti', 'STSong', 'STFangsong', 'LiHei Pro Medium', 'LiSong Pro Light', 'BiauKai', 'Apple LiGothic Medium', 'Apple LiSung Light',
+	'LiSu', 'YouYuan', 'STXihei', 'STZhongsong', 'FZShuTi', 'FZYaoti', 'STCaiyun', 'STHupo', 'STLiti', 'STXingkai', 'STXinwei'
+]
+
 const defaultOptions = {
 	rows: true,
 	font: true,
@@ -348,18 +354,24 @@ function setCellStyle(dom) {
 		let font = {};
 		font.size = get_computed_style(dom).getPropertyValue('font-size').match(/\d+/g)[0];
 		let fontName = get_computed_style(dom).getPropertyValue('font-family');
-		let fontNameDict = {SimSun: "SimSun"};
-		font.name = fontNameDict[fontName] ?? "SimSun";
+		font.name = fontFamilyDict.indexOf([fontName]) !== -1 ? fontName : 'SimSun';
 		font.bold = get_computed_style(dom).getPropertyValue('font-weight') === '700';
+		let fontStyleDict = {italic: 'italic', oblique: 'oblique'};
+		font.italic = fontStyleDict[get_computed_style(dom).getPropertyValue('font-style')] ? true : false;
+		let textDecoration = get_computed_style(dom).getPropertyValue('text-decoration');
+		font.underline = textDecoration === 'underline' ? true : false;
+		font.strike = textDecoration === 'line-through' ? true : false;
 
 		let hex = RGBToHex(get_computed_style(dom).getPropertyValue('color')).color;
 		font.color = { argb: 'ff' + hex };
 		o.font = font;
 		let alignment = {};
 		alignment.wrapText = get_computed_style(dom).getPropertyValue('white-space') !== 'nowrap';
-		//todo 部分css和excel属性值未匹配
-		alignment.horizontal = get_computed_style(dom).getPropertyValue('text-align');
-		alignment.vertical = get_computed_style(dom).getPropertyValue('vertical-align');
+		//部分css和excel属性值未匹配
+		let horizontalDict = {left: 'left', center: 'center', right: 'right', justify: 'justify'};
+		alignment.horizontal = horizontalDict[get_computed_style(dom).getPropertyValue('text-align')] || 'center';
+		let verticalDict = {top: 'top', middle: 'middle', bottom: 'bottom'};
+		alignment.vertical = verticalDict[get_computed_style(dom).getPropertyValue('vertical-align')] || 'middle';
 		o.alignment = alignment;
 		let border = {
 			top: parseBorder(get_computed_style(dom).getPropertyValue('border-top')),
@@ -402,7 +414,7 @@ return cs == ce ? cs : cs + ":" + ce;
 function parseBorder(s) {
 	let str = s.replace(new RegExp(', ', 'g'), ',')
 	let arr = str.split(' ');
-	let dict = {solid: 'thin'};
+	let dict = {solid: 'thin', dotted: 'dotted', dashed: 'dashDot', double: 'double'};
 	let style = dict[arr[1]];
 	if (!style) return undefined;
 	let color = RGBToHex(arr[2]);
